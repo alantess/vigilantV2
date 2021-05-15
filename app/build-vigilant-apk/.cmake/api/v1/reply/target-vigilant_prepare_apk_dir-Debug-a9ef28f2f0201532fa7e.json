@@ -1,0 +1,95 @@
+{
+	"backtrace" : 4,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target",
+			"qt6_android_add_apk_target",
+			"qt6_finalize_executable",
+			"qt_finalize_executable"
+		],
+		"files" : 
+		[
+			"/home/alan/Qt/6.1.0/android_armv7/lib/cmake/Qt6Core/Qt6AndroidMacros.cmake",
+			"/home/alan/Qt/6.1.0/android_armv7/lib/cmake/Qt6Core/Qt6CoreMacros.cmake",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 2,
+				"line" : 63,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 569,
+				"parent" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 560,
+				"parent" : 2
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 276,
+				"parent" : 3
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "vigilant::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "vigilant_prepare_apk_dir::@6890427a1f51a3e7e1df",
+	"name" : "vigilant_prepare_apk_dir",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 4,
+			"isGenerated" : true,
+			"path" : "/home/alan/Code/vigilantV2/app/build-vigilant-apk/CMakeFiles/vigilant_prepare_apk_dir",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "/home/alan/Code/vigilantV2/app/build-vigilant-apk/CMakeFiles/vigilant_prepare_apk_dir.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

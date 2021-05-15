@@ -1,0 +1,75 @@
+{
+	"BUILD_DIR" : "/home/alan/Code/vigilantV2/app/build-vigilant/vigilant_autogen",
+	"CMAKE_BINARY_DIR" : "/home/alan/Code/vigilantV2/app/build-vigilant",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/alan/Code/vigilantV2/app/build-vigilant",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/alan/Code/vigilantV2/app/vigilant",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_SOURCE_DIR" : "/home/alan/Code/vigilantV2/app/vigilant",
+	"HEADERS" : 
+	[
+		[
+			"/home/alan/Code/vigilantV2/app/vigilant/mainwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_mainwindow.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/alan/Code/vigilantV2/app/build-vigilant/vigilant_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/alan/Code/vigilantV2/app/build-vigilant/vigilant_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/alan/Code/vigilantV2/app/build-vigilant",
+		"/home/alan/Code/vigilantV2/app/vigilant",
+		"/home/alan/Qt/6.1.0/gcc_64/include/QtCore",
+		"/home/alan/Qt/6.1.0/gcc_64/include",
+		"/home/alan/Qt/6.1.0/gcc_64/mkspecs/linux-g++",
+		"/home/alan/Qt/6.1.0/gcc_64/include/QtWidgets",
+		"/home/alan/Qt/6.1.0/gcc_64/include/QtGui",
+		"/usr/include",
+		"/usr/include/c++/10",
+		"/usr/include/x86_64-linux-gnu/c++/10",
+		"/usr/include/c++/10/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/10/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/g++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.16/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/alan/Code/vigilantV2/app/build-vigilant/vigilant_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 8,
+	"PARSE_CACHE_FILE" : "/home/alan/Code/vigilantV2/app/build-vigilant/CMakeFiles/vigilant_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/home/alan/Qt/6.1.0/gcc_64/./libexec/moc",
+	"QT_UIC_EXECUTABLE" : "/home/alan/Qt/6.1.0/gcc_64/./libexec/uic",
+	"QT_VERSION_MAJOR" : 6,
+	"SETTINGS_FILE" : "/home/alan/Code/vigilantV2/app/build-vigilant/CMakeFiles/vigilant_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[ "/home/alan/Code/vigilantV2/app/vigilant/main.cpp", "MU" ],
+		[ "/home/alan/Code/vigilantV2/app/vigilant/mainwindow.cpp", "MU" ]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}
