@@ -1,4 +1,0 @@
-/home/alan/Code/vigilantV2/app/build-vigilant/CMakeFiles/rebuild_cache.dir
-/home/alan/Code/vigilantV2/app/build-vigilant/CMakeFiles/edit_cache.dir
-/home/alan/Code/vigilantV2/app/build-vigilant/CMakeFiles/vigilant.dir
-/home/alan/Code/vigilantV2/app/build-vigilant/CMakeFiles/vigilant_autogen.dir
