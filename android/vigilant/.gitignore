@@ -34,8 +34,6 @@ Thumbs.db
 *.rc
 /.qmake.cache
 /.qmake.stash
-build-vigilant/
-build-vigilant-apk/
 
 # qtcreator generated files
 *.pro.user*
