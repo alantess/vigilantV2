@@ -47,7 +47,9 @@ message(STATUS "CUDA TOOLKIT ${CUDA_TOOLKIT_ROOT_DIR}")
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 set(PROJECT_SOURCES
-        main.cpp
+        src/main.cpp
+        src/camera.cpp
+        include/camera.h
         qml.qrc
 )
 
