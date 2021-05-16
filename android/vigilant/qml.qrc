@@ -4,5 +4,8 @@
         <file>Page1Form.ui.qml</file>
         <file>Page2Form.ui.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>images/logo_light.png</file>
+        <file>images/tiny_logo_light.png</file>
+        <file>images/logo_dark.png</file>
     </qresource>
 </RCC>

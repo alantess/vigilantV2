@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <array name="qt_sources">
+        <item>https://download.qt.io/ministro/android/qt5/qt-5.14</item>
+    </array>
+
+    <!-- The following is handled automatically by the deployment tool. It should
+         not be edited manually. -->
+
+    <array name="bundled_libs">
+        
+    </array>
+
+    <array name="qt_libs">
+        <item>armeabi-v7a;c++_shared</item>
+        <item>armeabi-v7a;Qt6Core_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6Gui_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6Network_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6OpenGL_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6Qml_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6QmlModels_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6Quick_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6QuickTemplates2_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6QuickControls2Impl_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6QuickControls2_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6QuickLayouts_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6QmlWorkerScript_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6Sql_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6QmlLocalStorage_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6QuickParticles_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6Concurrent_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt63DCore_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt63DQuick_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt63DRender_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt63DQuickScene2D_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt63DAnimation_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt63DInput_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt63DLogic_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6QuickShapes_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6VirtualKeyboard_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6Widgets_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6Svg_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6StateMachine_armeabi-v7a</item>
+        <item>armeabi-v7a;Qt6StateMachineQml_armeabi-v7a</item>
+    </array>
+
+    <array name="load_local_libs">
+        <item>armeabi-v7a;libplugins_platforms_qtforandroid_armeabi-v7a.so</item>
+    </array>
+
+</resources>
