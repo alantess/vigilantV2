@@ -11,6 +11,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 set(OpenCV_DIR /usr/local/lib/cmake/opencv4)
+set(OPENCV_EXTRA_MODULES_PATH /home/alan/opencv/opencv_contrib-master/modules)
+set(CMAKE_PREFIX_PATH /home/alan/Downloads/libtorch)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -26,11 +28,23 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libssl.so)
 #    endif()
 #endif()
-# Adding OPENCV
+# OPENCV
 find_package( OpenCV REQUIRED )
+# Pytorch
+find_package(Torch REQUIRED)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
+
+
+message(STATUS "OpenCV library status:")
+message(STATUS "    config: ${OpenCV_DIR}")
+message(STATUS "    version: ${OpenCV_VERSION}")
+message(STATUS "    libraries: ${OpenCV_LIBS}")
+message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
+message(STATUS "CUDA TOOLKIT ${CUDA_TOOLKIT_ROOT_DIR}")
+include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 set(PROJECT_SOURCES
         main.cpp
@@ -54,11 +68,12 @@ else()
     endif()
 endif()
 
+
 target_compile_definitions(vigilant
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(vigilant
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
-target_link_directories(vigilant PRIVATE ${OpenCV_LIBS})
+target_link_directories(vigilant PRIVATE ${OpenCV_LIBS} ${TORCH_LIBRARIES})
 
 set_target_properties(vigilant PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
