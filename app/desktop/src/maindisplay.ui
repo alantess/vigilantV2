@@ -78,6 +78,32 @@
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
+      <widget class="QPushButton" name="submit_btn">
+       <property name="geometry">
+        <rect>
+         <x>680</x>
+         <y>10</y>
+         <width>89</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+	background-color: rgb(4, 77, 69);
+	border-radius:10px;
+	padding-left:5px;
+	padding-right:5px;
+	font: 700 italic 11pt &quot;Kinnari&quot;;
+	color: rgb(255, 255, 255);
+}
+QPushButton::hover{
+	background-color: rgb(71, 76, 179);
+}</string>
+       </property>
+       <property name="text">
+        <string>Run</string>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
