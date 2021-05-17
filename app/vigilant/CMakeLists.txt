@@ -70,12 +70,13 @@ else()
     endif()
 endif()
 
+target_include_directories(vigilant PRIVATE include)
 
 target_compile_definitions(vigilant
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(vigilant
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
-target_link_directories(vigilant PRIVATE ${OpenCV_LIBS} ${TORCH_LIBRARIES})
+target_link_libraries(vigilant PRIVATE ${OpenCV_LIBS} ${TORCH_LIBRARIES})
 
 set_target_properties(vigilant PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -87,3 +88,5 @@ if(QT_VERSION_MAJOR EQUAL 6)
     qt_import_qml_plugins(vigilant)
     qt_finalize_executable(vigilant)
 endif()
+
+

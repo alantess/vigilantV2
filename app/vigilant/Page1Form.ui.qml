@@ -16,7 +16,7 @@ Page {
 
     Image {
         id: camera
-        source: ""
+        source: "images/logo_dark.png"
         anchors {
             centerIn: parent
         }
