@@ -44,17 +44,12 @@ def fit_model(model,
             scaler.step(optimizer)
             scaler.update()
 
-            if i % 100 == 0:
-                print(f"[{i}/{epoch}] - {loss.item:.5f}")
+            if i % 200 == 0:
+                print(f"[{i}/{epoch}]: {loss.item():.5f}")
 
             total_loss += loss.item()
 
         print(f"EPOCH {epoch}\t Loss: {total_loss:.5f}")
-        # Save Model
-        if total_loss < best_score:
-            best_score = total_loss
-            model.save()
-            print("MODEL SAVED")
 
         # Validation
         if val_data_loader:
@@ -74,6 +69,12 @@ def fit_model(model,
                     val_total_loss += val_loss.item()
             print(f"Validation Loss: {val_total_loss:.5f}")
 
+        # Save Model
+        if val_total_loss < best_score:
+            best_score = total_loss
+            model.save()
+            print("MODEL SAVED")
+
     print("DONE.")
 
 
@@ -90,6 +91,6 @@ def visualize(img, mask, train_mode=False):
     grayscale = vision.transforms.Grayscale()
     mask = grayscale(mask)
 
-    plt.imshow(img.permute(1, 2, 0))
+    # plt.imshow(img.permute(1, 2, 0))
     plt.imshow(mask.permute(1, 2, 0), cmap='jet', alpha=0.4)
     plt.show()

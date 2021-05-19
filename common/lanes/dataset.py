@@ -32,6 +32,7 @@ class LanesDataset(Dataset):
             img = self.transform(img)
             img = normalize(img)
             mask = self.transform(mask)
+            # mask = mask * 10
             mask[mask > 0.4] = 2.0
 
         return img, mask

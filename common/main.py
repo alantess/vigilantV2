@@ -3,7 +3,7 @@ from torch import optim
 from torchvision import transforms
 import numpy as np
 from torch.utils.data import DataLoader
-from train import fit_model
+from train import fit_model, visualize
 from lanes.dataset import LanesDataset
 from lanes.model import LanesSegNet
 
@@ -12,10 +12,10 @@ if __name__ == '__main__':
     SEED = 99
     device = torch.device(
         'cuda') if torch.cuda.is_available() else torch.device('cpu')
-    BATCH_SIZE = 7
+    BATCH_SIZE = 3
     PIN_MEM = True
     NUM_WORKERS = 4
-    IMG_SIZE = 400
+    IMG_SIZE = 256
     EPOCHS = 1
     np.random.seed(SEED)
     torch.manual_seed(SEED)
@@ -39,10 +39,12 @@ if __name__ == '__main__':
 
     # Lane Segmentation
     loss_fn = torch.nn.CrossEntropyLoss()
-    model = LanesSegNet(2)
+    model = LanesSegNet(3)
     optimizer = optim.Adam(model.parameters(), lr=1e-4)
-    trainset = LanesDataset(img_path, lanes_colormask_trainpath, preprocess)
-    valset = LanesDataset(img_val_path, lanes_colormask_valpath, preprocess)
+    trainset = LanesDataset(img_path, lanes_colormask_trainpath, preprocess,
+                            55)
+    valset = LanesDataset(img_val_path, lanes_colormask_valpath, preprocess,
+                          20)
     train_loader = DataLoader(trainset,
                               BATCH_SIZE,
                               num_workers=NUM_WORKERS,
@@ -54,4 +56,7 @@ if __name__ == '__main__':
                             pin_memory=PIN_MEM,
                             shuffle=False)
 
-    fit_model(model, optimizer, trainset, loss_fn, device, EPOCHS, valset)
+    print("Training size: ", len(trainset))
+    print("Validation size: ", len(valset))
+    fit_model(model, optimizer, train_loader, loss_fn, device, EPOCHS,
+              val_loader)
