@@ -32,7 +32,8 @@ class LanesDataset(Dataset):
             img = self.transform(img)
             img = normalize(img)
             mask = self.transform(mask)
-            mask = mask * 5
-            mask[mask > 1] = 2.0
+            mask = mask.mul(255).clamp(0, 255)
+            mask[mask < 64] = 0.0
+            mask[mask > 64] = 1.0
 
         return img, mask

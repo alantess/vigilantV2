@@ -9,13 +9,13 @@ from lanes.model import LanesSegNet
 
 if __name__ == '__main__':
     # Default Params
-    SEED = 99
+    SEED = 98
     device = torch.device(
         'cuda') if torch.cuda.is_available() else torch.device('cpu')
-    BATCH_SIZE = 3
+    BATCH_SIZE = 4
     PIN_MEM = True
     NUM_WORKERS = 4
-    IMG_SIZE = 350
+    IMG_SIZE = 512
     EPOCHS = 10
     np.random.seed(SEED)
     torch.manual_seed(SEED)
@@ -38,13 +38,11 @@ if __name__ == '__main__':
     lanes_mask_valpath = "/media/alan/seagate/vigilant_datasets/lanes/labels/lane/masks/val/"
 
     # Lane Segmentation
-    loss_fn = torch.nn.CrossEntropyLoss()
-    model = LanesSegNet(3)
-    optimizer = optim.Adam(model.parameters(), lr=1e-4)
-    trainset = LanesDataset(img_path, lanes_colormask_trainpath, preprocess,
-                            55)
-    valset = LanesDataset(img_val_path, lanes_colormask_valpath, preprocess,
-                          20)
+    loss_fn = torch.nn.MSELoss()
+    model = LanesSegNet(4)
+    optimizer = optim.Adam(model.parameters(), lr=1e-5)
+    trainset = LanesDataset(img_path, lanes_mask_trainpath, preprocess, 6)
+    valset = LanesDataset(img_val_path, lanes_mask_valpath, preprocess, 10)
     train_loader = DataLoader(trainset,
                               BATCH_SIZE,
                               num_workers=NUM_WORKERS,
@@ -61,4 +59,4 @@ if __name__ == '__main__':
     fit_model(model, optimizer, train_loader, loss_fn, device, EPOCHS,
               val_loader)
 
-    test_model(model, val_loader, device)
+    test_model(model, val_loader, device, False)
