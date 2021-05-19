@@ -12,7 +12,7 @@ if __name__ == '__main__':
     SEED = 98
     device = torch.device(
         'cuda') if torch.cuda.is_available() else torch.device('cpu')
-    BATCH_SIZE = 4
+    BATCH_SIZE = 16
     PIN_MEM = True
     NUM_WORKERS = 4
     IMG_SIZE = 512
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     print("Training size: ", len(trainset))
     print("Validation size: ", len(valset))
-    fit_model(model, optimizer, train_loader, loss_fn, device, EPOCHS,
-              val_loader, True)
+    # fit_model(model, optimizer, train_loader, loss_fn, device, EPOCHS,
+    #           val_loader, True)
 
     test_model(model, val_loader, device, True)

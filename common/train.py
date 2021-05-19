@@ -94,15 +94,19 @@ def test_model(model, data_loader, device, default=False):
 
 # Visualization
 def visualize(img, mask, train_mode=False, epoch=0, iteration=0):
+
     invTrans = transforms.Compose([
         transforms.Normalize(mean=[0., 0., 0.],
                              std=[1 / 0.229, 1 / 0.224, 1 / 0.225]),
         transforms.Normalize(mean=[-0.485, -0.456, -0.406], std=[1., 1., 1.]),
     ])
+    resize = transforms.Resize((720, 1280))
+    img = resize(img)
     img = invTrans(img)
     img = img.cpu()
     if train_mode:
         mask = mask.detach().cpu()
+        mask = resize(mask)
     # print(mask.size())
     # print(torch.unique(mask))
     img = vision.utils.make_grid(img)
@@ -110,7 +114,7 @@ def visualize(img, mask, train_mode=False, epoch=0, iteration=0):
     grayscale = vision.transforms.Grayscale()
     mask = grayscale(mask)
 
-    # plt.imshow(img.permute(1, 2, 0))
+    plt.imshow(img.permute(1, 2, 0))
     plt.imshow(mask.permute(1, 2, 0), cmap='rainbow', alpha=0.3)
     save_name = 'img/' + str(epoch) + '_val.jpg'
     # plt.savefig(save_name)
