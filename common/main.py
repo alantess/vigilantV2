@@ -40,7 +40,7 @@ if __name__ == '__main__':
     # Lane Segmentation
     loss_fn = torch.nn.MSELoss()
     model = LanesSegNet(4)
-    optimizer = optim.Adam(model.parameters(), lr=1e-5)
+    optimizer = optim.Adam(model.parameters(), lr=1e-6)
     trainset = LanesDataset(img_path, lanes_mask_trainpath, preprocess, 6)
     valset = LanesDataset(img_val_path, lanes_mask_valpath, preprocess, 10)
     train_loader = DataLoader(trainset,
@@ -57,6 +57,6 @@ if __name__ == '__main__':
     print("Training size: ", len(trainset))
     print("Validation size: ", len(valset))
     fit_model(model, optimizer, train_loader, loss_fn, device, EPOCHS,
-              val_loader)
+              val_loader, True)
 
-    test_model(model, val_loader, device, False)
+    test_model(model, val_loader, device, True)

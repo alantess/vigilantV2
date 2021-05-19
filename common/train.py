@@ -114,5 +114,5 @@ def visualize(img, mask, train_mode=False, epoch=0, iteration=0):
     plt.imshow(mask.permute(1, 2, 0), cmap='rainbow', alpha=0.3)
     save_name = 'img/' + str(epoch) + '_val.jpg'
     # plt.savefig(save_name)
-    # plt.show()
+    plt.show()
     # plt.close()
