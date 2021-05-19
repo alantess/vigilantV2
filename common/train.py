@@ -78,12 +78,26 @@ def fit_model(model,
     print("DONE.")
 
 
+def test_model(model, data_loader, device):
+    model.load()
+    model.to(device)
+    img, mask = next(iter(data_loader))
+    mask = mask.to(dtype=torch.long)
+
+    img = img.to(device, dtype=torch.float32)
+
+    pred = model(img)
+    visualize(img, mask)
+
+
 # Visualization
 def visualize(img, mask, train_mode=False):
+    print(torch.unique(mask))
     img = img / 2 + 0.5
     plt.figure(figsize=(3, 4))
     img = img.cpu()
     if train_mode:
+        print(mask.size())
         mask = mask.argmax(1).detach().cpu()
 
     img = vision.utils.make_grid(img)

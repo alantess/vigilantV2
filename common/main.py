@@ -3,7 +3,7 @@ from torch import optim
 from torchvision import transforms
 import numpy as np
 from torch.utils.data import DataLoader
-from train import fit_model, visualize
+from train import *
 from lanes.dataset import LanesDataset
 from lanes.model import LanesSegNet
 
@@ -15,8 +15,8 @@ if __name__ == '__main__':
     BATCH_SIZE = 3
     PIN_MEM = True
     NUM_WORKERS = 4
-    IMG_SIZE = 256
-    EPOCHS = 1
+    IMG_SIZE = 350
+    EPOCHS = 10
     np.random.seed(SEED)
     torch.manual_seed(SEED)
     torch.backends.cudnn.benchmark = True
@@ -60,3 +60,5 @@ if __name__ == '__main__':
     print("Validation size: ", len(valset))
     fit_model(model, optimizer, train_loader, loss_fn, device, EPOCHS,
               val_loader)
+
+    test_model(model, val_loader, device)
