@@ -5,6 +5,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 from train import *
 from lanes.dataset import LanesDataset
+from visualize.video import show_video
 from lanes.model import LanesSegNet
 
 if __name__ == '__main__':
@@ -12,7 +13,7 @@ if __name__ == '__main__':
     SEED = 98
     device = torch.device(
         'cuda') if torch.cuda.is_available() else torch.device('cpu')
-    BATCH_SIZE = 16
+    BATCH_SIZE = 4
     PIN_MEM = True
     NUM_WORKERS = 4
     IMG_SIZE = 512
@@ -27,11 +28,14 @@ if __name__ == '__main__':
         transforms.Resize((IMG_SIZE, IMG_SIZE)),
     ])
 
-    # Image Path
+    # Video Paths
+    video_url = "https://github.com/commaai/speedchallenge/raw/master/data/train.mp4"
+
+    # Image Paths
     img_path = "/media/alan/seagate/vigilant_datasets/images/images/100k/train/"
     img_val_path = "/media/alan/seagate/vigilant_datasets/images/images/100k/val/"
     img_test_path = "/media/alan/seagate/vigilant_datasets/images/images/100k/test/"
-    # Lanes Path
+    # Lanes Paths
     lanes_colormask_trainpath = "/media/alan/seagate/vigilant_datasets/lanes/labels/lane/colormaps/train/"
     lanes_mask_trainpath = "/media/alan/seagate/vigilant_datasets/lanes/labels/lane/masks/train/"
     lanes_colormask_valpath = "/media/alan/seagate/vigilant_datasets/lanes/labels/lane/colormaps/val/"
@@ -54,9 +58,9 @@ if __name__ == '__main__':
                             pin_memory=PIN_MEM,
                             shuffle=False)
 
-    print("Training size: ", len(trainset))
-    print("Validation size: ", len(valset))
     # fit_model(model, optimizer, train_loader, loss_fn, device, EPOCHS,
     #           val_loader, True)
 
-    test_model(model, val_loader, device, True)
+    # test_model(model, val_loader, device, True)
+
+    show_video(video_url, model, device)
