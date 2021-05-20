@@ -5,7 +5,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 from train import *
 from lanes.dataset import LanesDataset
-from visualize.video import show_video
+from visualize.video import Display
 from lanes.model import LanesSegNet
 
 if __name__ == '__main__':
@@ -29,7 +29,8 @@ if __name__ == '__main__':
     ])
 
     # Video Paths
-    video_url = "https://github.com/commaai/speedchallenge/raw/master/data/train.mp4"
+    video_url = "visualize/videos/driving_footage.mp4"
+    display = Display(video_url)
 
     # Image Paths
     img_path = "/media/alan/seagate/vigilant_datasets/images/images/100k/train/"
@@ -63,4 +64,4 @@ if __name__ == '__main__':
 
     # test_model(model, val_loader, device, True)
 
-    show_video(video_url, model, device)
+    display.show(model, device)

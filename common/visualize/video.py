@@ -4,7 +4,7 @@ from torchvision import transforms
 import numpy as np
 
 
-class Dispay(object):
+class Display(object):
     def __init__(self, url):
         self.url = url
 
@@ -20,49 +20,54 @@ class Dispay(object):
         img = cv.cvtColor(final_hsv, cv.COLOR_HSV2BGR)
         return img
 
-    def show_video(self, model=None, device=None):
+    def show(self, model=None, device=None):
+        if model:
+            model.load()
+            model.to(device)
+
         FRAME_SIZE = (1280, 720)
         tensor_resize = transforms.Resize(FRAME_SIZE[::-1])
-        model.load()
-        model.to(device)
-
         preprocess = transforms.Compose([
             transforms.ToTensor(),
             transforms.Resize((512, 512)),
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
-        alpha = 0.25
+        alpha = 0.45
 
         cap = cv.VideoCapture(self.url)
         while cap.isOpened():
             ret, frame = cap.read()
+            frame = cv.resize(frame, FRAME_SIZE, interpolation=cv.INTER_AREA)
+
             # if frame is read correctly ret is True
             if not ret:
                 print("Can't receive frame (stream end?). Exiting ...")
                 break
-            # # Frame to Tensor
-            frame_tensor = preprocess(frame)
-            frame_tensor = frame_tensor.to(device, dtype=torch.float32)
+            if model:
+                #  Frame to Tensor
+                frame_tensor = preprocess(frame)
+                frame_tensor = frame_tensor.to(device, dtype=torch.float32)
 
-            # # Forward Pass
-            with torch.no_grad():
-                mask = model(frame_tensor.unsqueeze(0))
-                mask = tensor_resize(mask)
-                mask = mask[0].permute(1, 2, 0)
-                mask = mask.mul(255).clamp(0, 255)
-                mask = mask.detach().cpu().numpy().astype(np.uint8)
+                #  Forward Pass
+                with torch.no_grad():
+                    mask = model(frame_tensor.unsqueeze(0))
+                    mask = tensor_resize(mask)
+                    mask = mask[0].permute(1, 2, 0)
+                    mask = mask.mul(255).clamp(0, 255)
+                    mask = mask.detach().cpu().numpy().astype(np.uint8)
 
-            # Display Output
+                # Display Output
+                mask = cv.cvtColor(mask, cv.COLOR_GRAY2RGB)
+                mask = cv.applyColorMap(mask, cv.COLORMAP_TWILIGHT_SHIFTED)
 
-            frame = cv.resize(frame, FRAME_SIZE, interpolation=cv.INTER_AREA)
-            mask = cv.cvtColor(mask, cv.COLOR_GRAY2RGB)
-            mask = cv.applyColorMap(mask, cv.COLORMAP_TWILIGHT_SHIFTED)
+                merged = frame.copy()
+                cv.addWeighted(mask, alpha, merged, 1 - alpha, 0, merged)
+                merged = self.increase_brightness(merged, value=20)
 
-            merged = frame.copy()
-            cv.addWeighted(mask, alpha, merged, 1 - alpha, 0, merged)
-            merged = self.increase_brightness(merged, value=20)
+                cv.imshow('DEMO', merged)
+            else:
+                cv.imshow('DEMO', frame)
 
-            cv.imshow('DEMO', merged)
             if cv.waitKey(1) == ord('q'):
                 break
         cap.release()
