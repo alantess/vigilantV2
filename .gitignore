@@ -10,6 +10,9 @@ __pycache__/
 #Ignore models
 *.pt
 
+# Video Files
+*.mp4
+
 # Distribution / packaging
 .Python
 build/
