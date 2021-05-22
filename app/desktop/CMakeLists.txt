@@ -74,8 +74,10 @@ endif()
 
 
 target_include_directories(desktop PRIVATE include)
-target_link_libraries(desktop PRIVATE ${OpenCV_LIBS} ${TORCH_LIBRAIRES})
+target_link_libraries(desktop PRIVATE ${OpenCV_LIBS} ${TORCH_LIBRARIES})
 target_link_libraries(desktop PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+set_property(TARGET desktop PROPERTY CXX_STANDARD 14)
 
 
 set_target_properties(desktop PROPERTIES

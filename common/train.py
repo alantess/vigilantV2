@@ -120,3 +120,11 @@ def visualize(img, mask, train_mode=False, epoch=0, iteration=0):
     # plt.savefig(save_name)
     plt.show()
     # plt.close()
+
+
+def save_torchscript(model):
+    model.load()
+    example = torch.randn(1, 3, 512, 512)
+    traced_script_module = torch.jit.trace(model, example)
+    traced_script_module.save("saved_models/traced_resnet_model.pt")
+    print("MODEL SAVED.")

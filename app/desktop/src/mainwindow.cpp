@@ -1,12 +1,5 @@
-#include <iostream>
-#include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/opencv.hpp>
-#include <opencv2/videoio.hpp>
-#include <stdio.h>
-
-#include "./ui_maindisplay.h"
 #include "mainwindow.h"
+#include "./ui_maindisplay.h"
 
 #define DEFAULT_HEIGHT 720
 #define DEFAULT_WIDTH 1280

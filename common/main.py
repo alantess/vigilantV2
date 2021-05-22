@@ -29,7 +29,7 @@ if __name__ == '__main__':
     ])
 
     # Video Paths
-    video_url = "../etc/videos/driving_footage2.mp4"
+    video_url = "../etc/videos/driving.mp4"
     display = Display(video_url)
 
     # Image Paths
@@ -65,3 +65,5 @@ if __name__ == '__main__':
     # test_model(model, val_loader, device, True)
 
     display.show(model, device)
+
+    # save_torchscript(model)
