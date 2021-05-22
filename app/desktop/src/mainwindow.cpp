@@ -41,7 +41,7 @@ void MainWindow::display_camera() {
       ui->video_btn->setEnabled(false);
       // Enable Video
     } else if (b == ui->video_btn) {
-      cap.open("../../../etc/videos/driving_footage2.mp4");
+      cap.open("../../../etc/videos/driving.mp4");
       ui->video_btn->setText("Stop");
       ui->camera_btn->setText("DISABLED");
 
@@ -58,6 +58,15 @@ void MainWindow::display_camera() {
 
   std::cout << "Press spacebar to terminate.\n";
   // Loop through video or camera
+
+  // Load model
+  torch::jit::script::Module module;
+  try {
+    module = load_model("traced_lanesNet.pt");
+  } catch (const c10::Error &e) {
+    std::cerr << "error loading the model\n";
+  }
+
   for (;;) {
     cap.read(frame);
     if (frame.empty()) {
@@ -71,7 +80,19 @@ void MainWindow::display_camera() {
     // Display Camera image
     ui->camera->setPixmap(QPixmap::fromImage(imdisplay));
 
-    if (cv::waitKey(5) >= 0)
+    if (cv::waitKey(1) >= 0) {
+      this->close();
       break;
+    }
   }
+}
+
+// Loads torchscript Module
+torch::jit::Module load_model(std::string model_name) {
+  std::string directory = "../models/" + model_name;
+  torch::jit::Module module = torch::jit::load(directory);
+  module.to(torch::kCUDA);
+  module.eval();
+  std::cout << "Module Loaded: " << model_name << std::endl;
+  return module;
 }

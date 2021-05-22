@@ -64,6 +64,6 @@ if __name__ == '__main__':
 
     # test_model(model, val_loader, device, True)
 
-    display.show(model, device)
+    # display.show(model, device)
 
-    # save_torchscript(model)
+    save_torchscript(model)

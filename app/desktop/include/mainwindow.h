@@ -33,4 +33,7 @@ public Q_SLOTS:
 private:
   Ui::MainWindow *ui;
 };
+
+torch::jit::Module load_model(std::string model_name);
+
 #endif // MAINWINDOW_H
