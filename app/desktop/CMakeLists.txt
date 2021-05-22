@@ -4,11 +4,6 @@ project(desktop VERSION 0.1 LANGUAGES CXX)
 
 
 
-set(CMAKE_PREFIX_PATH /home/alan/Downloads/libtorch)
-set(CMAKE_INSTALL_PREFIX /usr/local)
-set(CMAKE_BUILD_TYPE Debug)
-set(OPENCV_EXTRA_MODULES_PATH /home/alan/opencv_build/opencv_contrib/modules)
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC ON)
@@ -17,6 +12,11 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_PREFIX_PATH /home/alan/Downloads/libtorch)
+set(CMAKE_INSTALL_PREFIX /usr/local)
+set(CMAKE_BUILD_TYPE Debug)
+set(OPENCV_EXTRA_MODULES_PATH /home/alan/opencv_build/opencv_contrib/modules)
+
 
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
 # Check https://doc.qt.io/qt/deployment-android.html for more information.

@@ -32,7 +32,7 @@ class Display(object):
             transforms.Resize((512, 512)),
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
-        alpha = 0.45
+        alpha = 0.85
 
         cap = cv.VideoCapture(self.url)
         while cap.isOpened():
