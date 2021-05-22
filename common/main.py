@@ -29,7 +29,7 @@ if __name__ == '__main__':
     ])
 
     # Video Paths
-    video_url = "visualize/videos/driving_footage2.mp4"
+    video_url = "../etc/videos/driving_footage2.mp4"
     display = Display(video_url)
 
     # Image Paths

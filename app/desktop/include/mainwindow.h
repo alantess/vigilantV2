@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <iostream>
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/opencv.hpp>
+#include <opencv2/videoio.hpp>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -15,8 +20,8 @@ class MainWindow : public QMainWindow {
 public:
   MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
-private slots:
-  void display_image();
+public slots:
+  void display_camera();
 
 private:
   Ui::MainWindow *ui;

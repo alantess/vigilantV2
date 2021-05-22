@@ -15,29 +15,56 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
 
   ui->setupUi(this);
-  connect(ui->submit_btn, SIGNAL(clicked()), this, SLOT(display_image()));
+  connect(ui->camera_btn, SIGNAL(clicked()), this, SLOT(display_camera()));
+  connect(ui->video_btn, SIGNAL(clicked()), this, SLOT(display_camera()));
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
-void MainWindow::display_image() {
-  cv::Mat frame;
+void MainWindow::display_camera() {
+
   cv::VideoCapture cap;
+  cv::Mat frame;
   int deviceID = 0;
   int apiID = cv::CAP_ANY;
-  cap.open(deviceID, apiID);
+  QPushButton *b = qobject_cast<QPushButton *>(sender());
+  if (b) {
+    // Enable Camera / Webcam
+    if (b == ui->camera_btn) {
+      cap.open(deviceID, apiID);
+      if (!cap.isOpened()) {
+        std::cerr << "\nError: Cannot open camera\n";
+      }
+
+      // Set the dimentions 1280x720, Remove AutoFocus/Focus
+      cap.set(cv::CAP_PROP_FRAME_WIDTH, DEFAULT_WIDTH);
+      cap.set(cv::CAP_PROP_FRAME_HEIGHT, DEFAULT_HEIGHT);
+      cap.set(cv::CAP_PROP_AUTOFOCUS, 0);
+      cap.set(cv::CAP_PROP_FOCUS, 0);
+
+      ui->camera_btn->setText("Stop");
+      ui->video_btn->setText("DISABLED");
+
+      ui->video_btn->setEnabled(false);
+      // Enable Video
+    } else if (b == ui->video_btn) {
+      cap.open("../../../etc/videos/driving_footage2.mp4");
+      ui->video_btn->setText("Stop");
+      ui->camera_btn->setText("DISABLED");
+
+      ui->camera_btn->setEnabled(false);
+      // Neither button has been clicked
+    } else {
+      std::cout << "No Button Selected.";
+    }
+  }
+
   if (!cap.isOpened()) {
     std::cerr << "\nError: Cannot open camera\n";
   }
 
-  // Set the dimentions 1280x720, Remove AutoFocus/Focus
-  cap.set(cv::CAP_PROP_FRAME_WIDTH, DEFAULT_WIDTH);
-  cap.set(cv::CAP_PROP_FRAME_HEIGHT, DEFAULT_HEIGHT);
-  cap.set(cv::CAP_PROP_AUTOFOCUS, 0);
-  cap.set(cv::CAP_PROP_FOCUS, 0);
-
   std::cout << "Press spacebar to terminate.\n";
-  ui->submit_btn->setText("Stop");
+  // Loop through video or camera
   for (;;) {
     cap.read(frame);
     if (frame.empty()) {
