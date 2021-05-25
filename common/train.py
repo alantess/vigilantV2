@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+# Train Model
 def fit_model(model,
               optimizer,
               data_loader,
@@ -76,6 +77,7 @@ def fit_model(model,
     print("DONE.")
 
 
+# Example from model
 def test_model(model, data_loader, device, default=False):
     img, mask = next(iter(data_loader))
     mask = mask.to(dtype=torch.float32)
@@ -92,7 +94,7 @@ def test_model(model, data_loader, device, default=False):
         visualize(img, mask)
 
 
-# Visualization
+# Visualization Example of Model
 def visualize(img, mask, train_mode=False, epoch=0, iteration=0):
 
     invTrans = transforms.Compose([
@@ -122,6 +124,7 @@ def visualize(img, mask, train_mode=False, epoch=0, iteration=0):
     # plt.close()
 
 
+# TorchScript
 def save_torchscript(model):
     model.load()
     example = torch.randn(1, 3, 512, 512)
@@ -129,3 +132,21 @@ def save_torchscript(model):
     cpp_model_dir = "../app/desktop/models/traced_lanesNet.pt"
     traced_script_module.save(cpp_model_dir)
     print("MODEL SAVED.")
+
+
+# Quantization
+def quantize(model, config="qnnpack"):
+    example = torch.randn(1, 3, 512, 512)
+    model.load()
+    model.eval()
+    model.qconfig = torch.quantization.get_default_qconfig(config)
+    # model_fp32_fused = torch.quantization.fuse_modules(model, [['base']])
+    model_prepared = torch.quantization.prepare(model)
+    model_prepared(example)
+    model_int_8 = torch.quantization.convert(model_prepared)
+    traced_script_module = torch.jit.trace(model, example)
+    cpp_model_dir = "saved_models/quantize_lanes.pt"
+    traced_script_module.save(cpp_model_dir)
+    print("QUANTIZED MODEL SAVED.")
+
+    return model_int_8

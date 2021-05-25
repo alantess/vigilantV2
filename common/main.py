@@ -66,4 +66,6 @@ if __name__ == '__main__':
 
     # display.show(model, device)
 
-    save_torchscript(model)
+    # save_torchscript(model)
+
+    quantized_model = quantize(model)

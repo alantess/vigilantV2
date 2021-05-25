@@ -35,5 +35,6 @@ private:
 };
 
 torch::jit::Module load_model(std::string model_name);
+cv::Mat frame_prediction(cv::Mat frame, torch::jit::Module model);
 
 #endif // MAINWINDOW_H

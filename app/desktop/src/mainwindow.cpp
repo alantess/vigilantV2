@@ -3,6 +3,7 @@
 
 #define DEFAULT_HEIGHT 720
 #define DEFAULT_WIDTH 1280
+#define IMG_SIZE 512
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -72,9 +73,10 @@ void MainWindow::display_camera() {
     if (frame.empty()) {
       std::cerr << "Error: Blank frame grabbed\n";
     }
-    // Reisze image and Change to RGB
-    cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
+    // Change to RGB
+    /* cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB); */
     // OPENCV to QPixMap
+    frame = frame_prediction(frame, module);
     QImage imdisplay((uchar *)frame.data, frame.cols, frame.rows, frame.step,
                      QImage::Format_RGB888);
     // Display Camera image
@@ -95,4 +97,34 @@ torch::jit::Module load_model(std::string model_name) {
   module.eval();
   std::cout << "Module Loaded: " << model_name << std::endl;
   return module;
+}
+
+// Return a frame of the model prediction
+cv::Mat frame_prediction(cv::Mat frame, torch::jit::Module model) {
+  double alpha = 0.4;
+  double beta = (1 - alpha);
+  cv::Mat frame_copy, dst;
+  std::vector<torch::jit::IValue> input;
+  std::vector<double> mean = {0.406, 0.456, 0.485};
+  std::vector<double> std = {0.225, 0.224, 0.229};
+  cv::resize(frame, frame, cv::Size(IMG_SIZE, IMG_SIZE));
+  frame_copy = frame;
+  frame.convertTo(frame, CV_32FC3, 1.0f / 255.0f);
+  // Cv2 -> Tensor
+  torch::Tensor frame_tensor =
+      torch::from_blob(frame.data, {1, IMG_SIZE, IMG_SIZE, 3});
+  frame_tensor = frame_tensor.permute({0, 3, 1, 2});
+  frame_tensor = torch::data::transforms::Normalize<>(mean, std)(frame_tensor);
+  frame_tensor = frame_tensor.to(torch::kCUDA);
+  input.push_back(frame_tensor);
+  auto pred = model.forward(input).toTensor().detach().to(torch::kCPU);
+  pred = pred.mul(100).clamp(0, 255).to(torch::kU8);
+
+  cv::Mat output_mat(cv::Size{IMG_SIZE, IMG_SIZE}, CV_8UC1, pred.data_ptr());
+  cv::cvtColor(output_mat, output_mat, cv::COLOR_GRAY2RGB);
+  cv::applyColorMap(output_mat, output_mat, cv::COLORMAP_TWILIGHT_SHIFTED);
+
+  cv::addWeighted(frame_copy, alpha, output_mat, beta, 0.0, dst);
+  cv::resize(dst, dst, cv::Size(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+  return dst;
 }
