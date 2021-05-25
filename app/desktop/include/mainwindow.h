@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <chrono>
 #include <iostream>
 #include <memory>
 #include <opencv2/core.hpp>

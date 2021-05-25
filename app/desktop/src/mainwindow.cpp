@@ -67,7 +67,7 @@ void MainWindow::display_camera() {
   } catch (const c10::Error &e) {
     std::cerr << "error loading the model\n";
   }
-
+  auto start = std::chrono::high_resolution_clock::now();
   for (;;) {
     cap.read(frame);
     if (frame.empty()) {
@@ -82,11 +82,14 @@ void MainWindow::display_camera() {
     // Display Camera image
     ui->camera->setPixmap(QPixmap::fromImage(imdisplay));
 
-    if (cv::waitKey(1) >= 0) {
-      this->close();
+    if (cv::waitKey(1) >= 27) {
       break;
     }
   }
+  auto stop = std::chrono::high_resolution_clock::now();
+  auto duration =
+      std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+  std::cout << "\nDuration: " << duration.count() << " microseconds\n";
 }
 
 // Loads torchscript Module
