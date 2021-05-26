@@ -3,9 +3,11 @@ from torch import optim
 from torchvision import transforms
 import numpy as np
 from torch.utils.data import DataLoader
-from train import *
+from helpers.video import Display
+from helpers.train import *
+from helpers.tscripts import *
+from helpers.quantize import *
 from lanes.dataset import LanesDataset
-from visualize.video import Display
 from lanes.model import LanesSegNet
 
 if __name__ == '__main__':
@@ -64,8 +66,8 @@ if __name__ == '__main__':
 
     # test_model(model, val_loader, device, True)
 
-    # display.show(model, device)
+    display.show(model, device)
 
     # save_torchscript(model)
 
-    quantized_model = quantize(model)
+    # quantized_model = quantize(model)
