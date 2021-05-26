@@ -10,7 +10,7 @@
      ├── Etc             #  Random Files, Images, Gifs
 
 # To-Do
-- [ ] Lane segmentation model (Quantize). 
+- [x] Lane segmentation model (Quantize). 
 - [ ] Road segmention model (Quantize).  
 - [ ] Speed analyis via camera model (Quantize). 
 - [ ] Deploy model on device. 
