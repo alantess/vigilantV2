@@ -96,7 +96,7 @@ void MainWindow::display_camera() {
 torch::jit::Module load_model(std::string model_name) {
   std::string directory = "../models/" + model_name;
   torch::jit::Module module = torch::jit::load(directory);
-  module.to(torch::kCUDA);
+  /* module.to(torch::kCUDA); */
   module.eval();
   std::cout << "Module Loaded: " << model_name << std::endl;
   return module;
@@ -118,7 +118,7 @@ cv::Mat frame_prediction(cv::Mat frame, torch::jit::Module model) {
       torch::from_blob(frame.data, {1, IMG_SIZE, IMG_SIZE, 3});
   frame_tensor = frame_tensor.permute({0, 3, 1, 2});
   frame_tensor = torch::data::transforms::Normalize<>(mean, std)(frame_tensor);
-  frame_tensor = frame_tensor.to(torch::kCUDA);
+  /* frame_tensor = frame_tensor.to(torch::kCUDA); */
   input.push_back(frame_tensor);
   auto pred = model.forward(input).toTensor().detach().to(torch::kCPU);
   pred = pred.mul(100).clamp(0, 255).to(torch::kU8);

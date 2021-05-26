@@ -5,7 +5,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 from helpers.video import Display
 from helpers.train import *
-from helpers.tscripts import *
+from helpers.tscript import *
 from helpers.quantize import *
 from lanes.dataset import LanesDataset
 from lanes.model import LanesSegNet
@@ -49,7 +49,16 @@ if __name__ == '__main__':
     model = LanesSegNet(4)
     optimizer = optim.Adam(model.parameters(), lr=1e-6)
     trainset = LanesDataset(img_path, lanes_mask_trainpath, preprocess, 6)
+    calibrated_set = LanesDataset(img_path, lanes_mask_trainpath, preprocess,
+                                  36)
+
     valset = LanesDataset(img_val_path, lanes_mask_valpath, preprocess, 10)
+    calibrated_loader = DataLoader(calibrated_set,
+                                   BATCH_SIZE,
+                                   num_workers=NUM_WORKERS,
+                                   pin_memory=PIN_MEM,
+                                   shuffle=True)
+
     train_loader = DataLoader(trainset,
                               BATCH_SIZE,
                               num_workers=NUM_WORKERS,
@@ -66,8 +75,8 @@ if __name__ == '__main__':
 
     # test_model(model, val_loader, device, True)
 
-    display.show(model, device)
+    # display.show(model, device)
 
     # save_torchscript(model)
 
-    # quantized_model = quantize(model)
+    model = quantize(model, calibrated_loader)
