@@ -63,7 +63,7 @@ void MainWindow::display_camera() {
   // Load model
   torch::jit::script::Module module;
   try {
-    module = load_model("traced_lanesNet.pt");
+    module = load_model("quantized_lanesNet.pt");
   } catch (const c10::Error &e) {
     std::cerr << "error loading the model\n";
   }
@@ -94,7 +94,7 @@ void MainWindow::display_camera() {
 
 // Loads torchscript Module
 torch::jit::Module load_model(std::string model_name) {
-  std::string directory = "../models/" + model_name;
+  std::string directory = "../../../models/" + model_name;
   torch::jit::Module module = torch::jit::load(directory);
   /* module.to(torch::kCUDA); */
   module.eval();

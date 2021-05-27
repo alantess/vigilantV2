@@ -36,7 +36,7 @@ def quantize(model, data_loader, config="fbgemm"):
     print_size_of_model(model_int_8)
     model_int_8(example)
     torch.jit.save(torch.jit.script(model_int_8),
-                   "../app/desktop/models/traced_lanesNet.pt")
+                   "../app/desktop/models/traced_quantize_lanesNet.pt")
 
     return model_int_8
 

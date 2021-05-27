@@ -79,4 +79,4 @@ if __name__ == '__main__':
 
     # save_torchscript(model)
 
-    model = quantize(model, calibrated_loader)
+    # model = quantize(model, calibrated_loader)

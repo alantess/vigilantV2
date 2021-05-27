@@ -6,10 +6,10 @@ from torch import nn
 
 
 class LanesSegNet(nn.Module):
-    def __init__(self, num_classes=4, chkpt='saved_models'):
+    def __init__(self, num_classes=4, chkpt='models'):
         super(LanesSegNet, self).__init__()
         self.chkpt = chkpt
-        self.file = os.path.join(chkpt, "lanes_segnet.pt")
+        self.file = os.path.join("../" + chkpt, "lanes_segnet.pt")
 
         self.u_net = URes()
         # Combines left and right camera
