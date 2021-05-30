@@ -1,4 +1,5 @@
 import cv2 as cv
+from .models_info import *
 import torch
 from torchvision import transforms
 import numpy as np
@@ -32,7 +33,7 @@ class Display(object):
             transforms.Resize((512, 512)),
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
-        alpha = 0.85
+        alpha = 0.55
 
         cap = cv.VideoCapture(self.url)
         while cap.isOpened():
@@ -54,8 +55,9 @@ class Display(object):
                     mask = tensor_resize(mask)
                     mask = mask[0].permute(1, 2, 0)
                     mask = mask.mul(255).clamp(0, 255)
-                    mask = mask.detach().cpu().numpy().astype(np.uint8)
-
+                    mask = mask.detach().cpu().numpy().astype(np.float32)
+                    mask = apply_sharpen_filter(mask,
+                                                alpha=50).astype(np.uint8)
                 # Display Output
                 mask = cv.cvtColor(mask, cv.COLOR_GRAY2RGB)
                 mask = cv.applyColorMap(mask, cv.COLORMAP_TWILIGHT_SHIFTED)

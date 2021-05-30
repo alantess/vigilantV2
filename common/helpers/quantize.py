@@ -6,9 +6,13 @@ from torch import nn
 from torch.quantization import get_default_qconfig
 from torch.quantization.quantize_fx import convert_fx, prepare_fx
 from torch.quantization import QuantStub, DeQuantStub
+from torch.utils.mobile_optimizer import optimize_for_mobile
+
+MODEL_DIR = "../app/desktop/models/"
 
 
-def quantize(model, data_loader, config="fbgemm"):
+# Creates torchscript model for Mobile and Desktop
+def quantize(model, data_loader, config="fbgemm", name="lanes"):
     example = torch.randn(1, 3, 512, 512)
     # Configuration
     prep_config_dict = {"non_traceable_module_name": ["base", "deconv"]}
@@ -34,9 +38,13 @@ def quantize(model, data_loader, config="fbgemm"):
     print(f"Number of Parameters: {params}M")
 
     print_size_of_model(model_int_8)
-    model_int_8(example)
+
+    mobile_model = torch.jit.script(model_int_8)
+    torchscript_mobile = optimize_for_mobile(mobile_model)
+    torch.jit.save(torchscript_mobile, MODEL_DIR + name + "_mobile.pt")
+
     torch.jit.save(torch.jit.script(model_int_8),
-                   "../app/desktop/models/traced_quantize_lanesNet.pt")
+                   MODEL_DIR + "quantized_" + name + "Net.pt")
 
     return model_int_8
 

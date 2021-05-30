@@ -5,7 +5,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 from helpers.video import Display
 from helpers.train import *
-from helpers.tscript import *
+from helpers.models_info import *
 from helpers.quantize import *
 from lanes.dataset import LanesDataset
 from lanes.model import LanesSegNet
@@ -75,8 +75,7 @@ if __name__ == '__main__':
 
     # test_model(model, val_loader, device, True)
 
-    # display.show(model, device)
-
-    # save_torchscript(model)
+    display.show(model, device)
 
     # model = quantize(model, calibrated_loader)
+    # intepret_semantic_model(model, device)
