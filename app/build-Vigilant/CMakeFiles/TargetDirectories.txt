@@ -1,0 +1,7 @@
+/home/alan/Code/vigilantV2/app/build-Vigilant/CMakeFiles/rebuild_cache.dir
+/home/alan/Code/vigilantV2/app/build-Vigilant/CMakeFiles/edit_cache.dir
+/home/alan/Code/vigilantV2/app/build-Vigilant/CMakeFiles/Vigilant_prepare_apk_dir.dir
+/home/alan/Code/vigilantV2/app/build-Vigilant/CMakeFiles/apk.dir
+/home/alan/Code/vigilantV2/app/build-Vigilant/CMakeFiles/Vigilant_make_apk.dir
+/home/alan/Code/vigilantV2/app/build-Vigilant/CMakeFiles/Vigilant.dir
+/home/alan/Code/vigilantV2/app/build-Vigilant/CMakeFiles/Vigilant_autogen.dir

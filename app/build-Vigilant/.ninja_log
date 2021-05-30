@@ -1,0 +1,15 @@
+# ninja log v5
+0	149	0	CMakeFiles/Vigilant_autogen	f18ce44ba205ef84
+0	149	0	Vigilant_autogen/mocs_compilation.cpp	f18ce44ba205ef84
+149	1266	1622391786417088075	CMakeFiles/Vigilant.dir/Vigilant_autogen/mocs_compilation.cpp.o	22e94dce1741a86d
+150	1353	1622391786505087853	CMakeFiles/Vigilant.dir/main.cpp.o	ff887da394b668d
+150	1411	1622391786561087713	CMakeFiles/Vigilant.dir/mainwindow.cpp.o	7b62586c285d5837
+1411	1458	1622391786609087593	libVigilant_armeabi-v7a.so	d873b5595e07a5eb
+1458	1468	0	CMakeFiles/Vigilant_prepare_apk_dir	3e4c5001a2688dd4
+1	14	0	CMakeFiles/Vigilant_autogen	f18ce44ba205ef84
+1	14	0	Vigilant_autogen/mocs_compilation.cpp	f18ce44ba205ef84
+0	9	0	CMakeFiles/Vigilant_autogen	f18ce44ba205ef84
+0	9	0	Vigilant_autogen/mocs_compilation.cpp	f18ce44ba205ef84
+9	1253	1622392023916132617	CMakeFiles/Vigilant.dir/mainwindow.cpp.o	7b62586c285d5837
+1253	1288	1622392023952132457	libVigilant_armeabi-v7a.so	d873b5595e07a5eb
+1288	1295	0	CMakeFiles/Vigilant_prepare_apk_dir	3e4c5001a2688dd4
