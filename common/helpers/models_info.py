@@ -3,12 +3,8 @@ from scipy import misc, ndimage
 import matplotlib.pyplot as plt
 import torch
 import numpy as np
-
 from torchvision import models
 from torchvision import transforms
-
-from captum.attr import visualization as viz
-from captum.attr import LayerGradCam, FeatureAblation, LayerActivation, LayerAttribution
 
 
 def intepret_semantic_model(model, device, alpha=50):

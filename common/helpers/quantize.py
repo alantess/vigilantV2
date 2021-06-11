@@ -49,6 +49,12 @@ def quantize(model, data_loader, config="fbgemm", name="lanes"):
     return model_int_8
 
 
+def get_quantized_model():
+    directory = "../models/quantized_lanesNet.pt"
+    model = torch.jit.load(directory, map_location=torch.device('cpu'))
+    return model
+
+
 def restructure_model(model):
     model = nn.Sequential(QuantStub(), model, DeQuantStub())
     return model

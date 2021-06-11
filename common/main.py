@@ -1,3 +1,4 @@
+import os
 import torch
 from torch import optim
 from torchvision import transforms
@@ -75,6 +76,8 @@ if __name__ == '__main__':
 
     # test_model(model, val_loader, device, True)
 
+    # quantized_model = get_quantized_model()
+    # display.show(quantized_model, torch.device('cpu'))
     display.show(model, device)
 
     # model = quantize(model, calibrated_loader)

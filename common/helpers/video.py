@@ -1,6 +1,7 @@
 import cv2 as cv
 from .models_info import *
 import torch
+from torch.cuda.amp import autocast
 from torchvision import transforms
 import numpy as np
 
@@ -21,8 +22,8 @@ class Display(object):
         img = cv.cvtColor(final_hsv, cv.COLOR_HSV2BGR)
         return img
 
-    def show(self, model=None, device=None):
-        if model:
+    def show(self, model=None, device=None, load_model=True):
+        if load_model:
             model.load()
             model.to(device)
 
@@ -35,6 +36,9 @@ class Display(object):
         ])
         alpha = 0.55
 
+        frame_tensor = torch.zeros((1, 3, 512, 512),
+                                   device=device,
+                                   dtype=torch.float32)
         cap = cv.VideoCapture(self.url)
         while cap.isOpened():
             ret, frame = cap.read()
@@ -46,15 +50,16 @@ class Display(object):
                 break
             if model:
                 #  Frame to Tensor
-                frame_tensor = preprocess(frame)
-                frame_tensor = frame_tensor.to(device, dtype=torch.float32)
+                frame_input = preprocess(frame)
+                frame_tensor[0] = frame_input
 
                 #  Forward Pass
                 with torch.no_grad():
-                    mask = model(frame_tensor.unsqueeze(0))
-                    mask = tensor_resize(mask)
-                    mask = mask[0].permute(1, 2, 0)
-                    mask = mask.mul(255).clamp(0, 255)
+                    with autocast():
+                        mask = model(frame_tensor)
+                        mask = tensor_resize(mask)
+                        mask = mask[0].permute(1, 2, 0)
+                        mask = mask.mul(255).clamp(0, 255)
                     mask = mask.detach().cpu().numpy().astype(np.float32)
                     mask = apply_sharpen_filter(mask,
                                                 alpha=50).astype(np.uint8)
