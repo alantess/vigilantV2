@@ -1,0 +1,9 @@
+{
+    "img_path": "/media/alan/seagate/vigilant_datasets/images/images/100k/train/",
+    "img_val_path": "/media/alan/seagate/vigilant_datasets/images/images/100k/val/",
+    "img_test_path": "/media/alan/seagate/vigilant_datasets/images/images/100k/test/",
+    "lanes_colormask_trainpath": "/media/alan/seagate/vigilant_datasets/lanes/labels/lane/colormaps/train/",
+    "lanes_mask_trainpath": "/media/alan/seagate/vigilant_datasets/lanes/labels/lane/masks/train/",
+    "lanes_colormask_valpath": "/media/alan/seagate/vigilant_datasets/lanes/labels/lane/colormaps/val/",
+    "lanes_mask_valpath": "/media/alan/seagate/vigilant_datasets/lanes/labels/lane/masks/val/"
+}

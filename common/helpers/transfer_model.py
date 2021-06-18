@@ -8,12 +8,12 @@ from torch.quantization.quantize_fx import convert_fx, prepare_fx
 from torch.quantization import QuantStub, DeQuantStub
 from torch.utils.mobile_optimizer import optimize_for_mobile
 
-MODEL_DIR = "../app/desktop/models/"
+MODEL_MAIN_DIR = "../models/"
+example = torch.randn(1, 3, 512, 512)
 
 
 # Creates torchscript model for Mobile and Desktop
 def quantize(model, data_loader, config="fbgemm", name="lanes"):
-    example = torch.randn(1, 3, 512, 512)
     # Configuration
     prep_config_dict = {"non_traceable_module_name": ["base", "deconv"]}
     qconfig = get_default_qconfig(config)
@@ -41,10 +41,10 @@ def quantize(model, data_loader, config="fbgemm", name="lanes"):
 
     mobile_model = torch.jit.script(model_int_8)
     torchscript_mobile = optimize_for_mobile(mobile_model)
-    torch.jit.save(torchscript_mobile, MODEL_DIR + name + "_mobile.pt")
+    torch.jit.save(torchscript_mobile, MODEL_MAIN_DIR + name + "_mobile.pt")
 
     torch.jit.save(torch.jit.script(model_int_8),
-                   MODEL_DIR + "quantized_" + name + "Net.pt")
+                   MODEL_MAIN_DIR + "quantized_" + name + "Net.pt")
 
     return model_int_8
 
@@ -73,3 +73,14 @@ def calibrate(model, data_loader):
     with torch.no_grad():
         for (X, _) in (loop):
             model(X)
+
+
+def save_onnx(model, model_name):
+    model.load()
+    model_file = MODEL_MAIN_DIR + model_name + '.onnx'
+    torch.onnx.export(model,
+                      example,
+                      model_file,
+                      verbose=True,
+                      opset_version=11)
+    print(f"Saved ONNX Model to {model_file}")

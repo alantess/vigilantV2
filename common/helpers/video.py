@@ -1,5 +1,5 @@
 import cv2 as cv
-from .models_info import *
+from .support import *
 import torch
 from torch.cuda.amp import autocast
 from torchvision import transforms
@@ -22,8 +22,12 @@ class Display(object):
         img = cv.cvtColor(final_hsv, cv.COLOR_HSV2BGR)
         return img
 
-    def show(self, model=None, device=None, load_model=True):
-        if load_model:
+    def show(self,
+             model=None,
+             device=None,
+             load_model=True,
+             quantized_model=False):
+        if load_model and not quantized_model:
             model.load()
             model.to(device)
 
