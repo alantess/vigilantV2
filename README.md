@@ -14,7 +14,8 @@
 ```
 - Visualize the model performance
 ```sh
-   python main.py --test True
+  cd vigilantV2 && ./get_models.sh
+  cd drive && python main.py --test True
 ```
 
 
@@ -38,8 +39,6 @@
     │   │   └── video.py
     ├── drive # Main Controller
     │   ├── lanes # Lane Semantic Segmentation
-    │   │   ├── dataset.py
-    │   │   ├── model.py
     │   ├── main.py
     │   └── paths.json # Paths to dataset 
     ├── etc # Images and Videos
