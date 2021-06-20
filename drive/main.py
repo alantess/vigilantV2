@@ -12,6 +12,7 @@ from torch.utils.data import DataLoader
 from common.helpers.video import Display
 from common.helpers.train import *
 from common.helpers.support import *
+from common.ptcloud.visuals import FeatDisplay
 from common.helpers.transfer_model import *
 from lanes.dataset import LanesDataset
 from lanes.model import LanesSegNet
@@ -74,32 +75,34 @@ if __name__ == '__main__':
     loss_fn = torch.nn.MSELoss()
     model = LanesSegNet(CLASSES)
     optimizer = optim.Adam(model.parameters(), lr=1e-6)
-    trainset = LanesDataset(paths["img_path"], paths["lanes_mask_trainpath"],
-                            preprocess, 6)
-    calibrated_set = LanesDataset(paths["img_path"],
-                                  paths["lanes_mask_trainpath"], preprocess,
-                                  36)
-    valset = LanesDataset(paths["img_val_path"], paths["lanes_mask_valpath"],
-                          preprocess, 10)
-    calibrated_loader = DataLoader(calibrated_set,
-                                   BATCH_SIZE,
-                                   num_workers=NUM_WORKERS,
-                                   pin_memory=PIN_MEM,
-                                   shuffle=True)
+    pt_display = FeatDisplay(model, device)
+    pt_display.show_with_model()
+    # trainset = LanesDataset(paths["img_path"], paths["lanes_mask_trainpath"],
+    #                         preprocess, 6)
+    # calibrated_set = LanesDataset(paths["img_path"],
+    #                               paths["lanes_mask_trainpath"], preprocess,
+    #                               36)
+    # valset = LanesDataset(paths["img_val_path"], paths["lanes_mask_valpath"],
+    #                       preprocess, 10)
+    # calibrated_loader = DataLoader(calibrated_set,
+    #                                BATCH_SIZE,
+    #                                num_workers=NUM_WORKERS,
+    #                                pin_memory=PIN_MEM,
+    #                                shuffle=True)
 
-    train_loader = DataLoader(trainset,
-                              BATCH_SIZE,
-                              num_workers=NUM_WORKERS,
-                              pin_memory=PIN_MEM,
-                              shuffle=True)
-    val_loader = DataLoader(valset,
-                            BATCH_SIZE,
-                            num_workers=NUM_WORKERS,
-                            pin_memory=PIN_MEM,
-                            shuffle=False)
+    # train_loader = DataLoader(trainset,
+    #                           BATCH_SIZE,
+    #                           num_workers=NUM_WORKERS,
+    #                           pin_memory=PIN_MEM,
+    #                           shuffle=True)
+    # val_loader = DataLoader(valset,
+    #                         BATCH_SIZE,
+    #                         num_workers=NUM_WORKERS,
+    #                         pin_memory=PIN_MEM,
+    #                         shuffle=False)
 
-    if not args.test:
-        fit_model(model, optimizer, train_loader, loss_fn, device, EPOCHS,
-                  val_loader)
-    else:
-        display.show(model, device)
+    # if not args.test:
+    #     fit_model(model, optimizer, train_loader, loss_fn, device, EPOCHS,
+    #               val_loader)
+    # else:
+    #     display.show(model, device)

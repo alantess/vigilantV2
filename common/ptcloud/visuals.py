@@ -1,15 +1,23 @@
 import numpy as np
+import torch
+from torchvision import transforms
+from common.helpers.support import apply_sharpen_filter
 import cv2 as cv
 import open3d as o3d
-from generate_cloud import FeatureExtractor
+from common.ptcloud.extract import FeatureExtractor
 
 W, H = 720, 480
-VIDEO = '../../etc/videos/driving.mp4'
+VIDEO = '../etc/videos/driving.mp4'
 
 
-class Display(object):
-    def __init__(self):
+class FeatDisplay(object):
+    def __init__(self, model=None, device=None):
         # Gui Settings for Point Cloud
+        self.model = model
+        self.device = device
+        if self.model:
+            self.model.load()
+            self.model.to(device)
         self.vis = o3d.visualization.Visualizer()
         self.vis.create_window(width=W, height=H, top=600, left=650)
         opt = self.vis.get_render_option()
@@ -28,6 +36,41 @@ class Display(object):
         self.extractor = FeatureExtractor(H, W)
         # Open Video
         self.cap = cv.VideoCapture(VIDEO)
+
+    def show_with_model(self):
+        preprocess = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Resize((512, 512)),
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+        ])
+
+        img_tensor = torch.zeros((1, 3, 512, 512),
+                                 device=self.device,
+                                 dtype=torch.float32)
+        while self.cap.isOpened():
+            ret, frame = self.cap.read()
+            img_tensor[0] = preprocess(frame)
+            with torch.no_grad():
+                with torch.cuda.amp.autocast():
+                    mask = self.model(img_tensor)
+                    mask = mask[0].permute(1, 2, 0)
+                    mask = mask.mul(255).clamp(0, 255)
+                mask = mask.detach().cpu().numpy().astype(np.float32)
+                frame = apply_sharpen_filter(mask, alpha=50).astype(np.uint8)
+
+            frame = cv.resize(frame, (W, H))
+            # Display Output
+            frame = cv.cvtColor(frame, cv.COLOR_GRAY2RGB)
+            # img = cv.applyColorMap(frame, cv.COLORMAP_TWILIGHT_SHIFTED)
+            img, xyz = self.extractor.extract(frame)
+            self.display_lidar(xyz)
+            cv.imshow('frame', img)
+            if cv.waitKey(1) == ord('q'):
+                break
+
+        self.vis.run()
+        self.vis.destroy_window()
+        cv.destroyAllWindows()
 
     def show(self):
         while self.cap.isOpened():
@@ -48,8 +91,3 @@ class Display(object):
         self.vis.update_geometry(self.geometry)
         self.vis.update_renderer()
         self.vis.poll_events()
-
-
-if __name__ == '__main__':
-    display = Display()
-    display.show()
