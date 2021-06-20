@@ -14,8 +14,17 @@ class Display(object):
         self.vis.create_window(width=W, height=H, top=600, left=650)
         opt = self.vis.get_render_option()
         opt.background_color = np.asarray([0, 0, 0])
-        geometry = o3d.geometry.PointCloud()
-        self.vis.add_geometry(geometry)
+        ctr = self.vis.get_view_control()
+        # ctr.set_lookat([0, 1, 0])
+        ctr.set_front([1, 0, 0])
+        # ctr.set_up([0, 0, 1])
+        ctr.set_zoom(0.25)
+        frame = o3d.geometry.TriangleMesh.create_coordinate_frame(1.5)
+
+        self.geometry = o3d.geometry.PointCloud()
+        self.vis.add_geometry(frame)
+        self.vis.clear_geometries()
+        self.vis.add_geometry(self.geometry)
         self.extractor = FeatureExtractor(H, W)
         # Open Video
         self.cap = cv.VideoCapture(VIDEO)
@@ -30,17 +39,15 @@ class Display(object):
             if cv.waitKey(1) == ord('q'):
                 break
 
+        self.vis.run()
+        self.vis.destroy_window()
         cv.destroyAllWindows()
 
     def display_lidar(self, xyz):
-        pcd = o3d.geometry.PointCloud()
-        pcd.points = o3d.utility.Vector3dVector(xyz)
-        ctr = self.vis.get_view_control()
-        ctr.rotate(10, 0.0, 0.0)
-
-        self.vis.clear_geometries()
-        self.vis.add_geometry(pcd)
-        self.vis.run()
+        self.geometry.points = o3d.utility.Vector3dVector(xyz)
+        self.vis.update_geometry(self.geometry)
+        self.vis.update_renderer()
+        self.vis.poll_events()
 
 
 if __name__ == '__main__':
