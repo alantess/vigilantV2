@@ -23,9 +23,9 @@ class FeatDisplay(object):
         opt = self.vis.get_render_option()
         opt.background_color = np.asarray([0, 0, 0])
         ctr = self.vis.get_view_control()
-        # ctr.set_lookat([0, 1, 0])
+        ctr.set_lookat([0, 1, 0])
         ctr.set_front([1, 0, 0])
-        # ctr.set_up([0, 0, 1])
+        ctr.set_up([0, 0, 1])
         ctr.set_zoom(0.25)
         frame = o3d.geometry.TriangleMesh.create_coordinate_frame(1.5)
 

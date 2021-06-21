@@ -50,7 +50,8 @@ class FeatureExtractor(object):
             flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
         # Extracts ORB
         feats = cv.goodFeaturesToTrack(
-            np.linalg.norm(img, axis=2, ord=2).astype(np.uint8), 2000, 0.01, 3)
+            np.linalg.norm(img, axis=2, ord=-2).astype(np.uint8), 3000, 0.01,
+            4)
         kps = [cv.KeyPoint(x=f[0][0], y=f[0][1], _size=20) for f in feats]
         kps, des = self.orb.compute(img, kps)
 
@@ -61,25 +62,26 @@ class FeatureExtractor(object):
 
         return img, xyz
 
-    def lidar_generation(self, pts, max_high=0.5):
+    def lidar_generation(self, pts):
         uv_depth = self._2d_to_3d(pts)
+        uv_depth = self.scaler.fit_transform(uv_depth)
         n = uv_depth.shape[0]
-        x = ((uv_depth[:, 0] - self.c_u) * uv_depth[:, 2]) / self.f_u
-        y = ((uv_depth[:, 1] - self.c_v) * uv_depth[:, 2]) / self.f_v
+
+        x = ((uv_depth[:, 0]) * self.c_u / self.f_u) + (
+            (uv_depth[:, 0]) * uv_depth[:, 2] / self.f_u)
+        y = ((uv_depth[:, 1]) * self.c_v / self.f_v) + (
+            (uv_depth[:, 1]) * uv_depth[:, 2] / self.f_v)
+
         pts_3d_rect = np.zeros((n, 3))
         pts_3d_rect[:, 0] = x
         pts_3d_rect[:, 1] = y
         pts_3d_rect[:, 2] = uv_depth[:, 2]
-        pts_3d_rect = self.scaler.fit_transform(pts_3d_rect)
 
-        valid = (pts_3d_rect[:, 0] >= 0) & (pts_3d_rect[:, 2] < max_high)
-        pts_3d_rect = pts_3d_rect[valid]
+        pts_3d_rect = self.scaler.fit_transform(pts_3d_rect)
         return pts_3d_rect
 
     def _2d_to_3d(self, pts):
-        rows, cols = pts.shape
-        c, r = np.meshgrid(np.arange(cols), np.arange(rows))
-        points = np.stack([c, r, pts])
+        points = cv.convertPointsToHomogeneous(pts)
         points = points.reshape((3, -1))
         points = points.T
         return points
