@@ -4,7 +4,7 @@ from torchvision import transforms
 from common.helpers.support import apply_sharpen_filter
 import cv2 as cv
 import open3d as o3d
-from common.ptcloud.extract import FeatureExtractor
+from common.slam.extract import FeatureExtractor
 
 W, H = 720, 480
 VIDEO = '../etc/videos/driving.mp4'

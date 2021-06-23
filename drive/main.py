@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 from common.helpers.video import Display
 from common.helpers.train import *
 from common.helpers.support import *
-from common.ptcloud.visuals import FeatDisplay
+from common.slam.visuals import FeatDisplay
 from common.helpers.transfer_model import *
 from lanes.dataset import LanesDataset
 from lanes.model import LanesSegNet

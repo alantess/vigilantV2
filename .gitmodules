@@ -1,0 +1,3 @@
+[submodule "common/slam"]
+	path = common/slam
+	url = git@github.com:alantess/slam.git

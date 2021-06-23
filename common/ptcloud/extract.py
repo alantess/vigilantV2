@@ -50,13 +50,15 @@ class FeatureExtractor(object):
             flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
         # Extracts ORB
         feats = cv.goodFeaturesToTrack(
-            np.linalg.norm(img, axis=2, ord=-2).astype(np.uint8), 3000, 0.01,
-            4)
+            np.mean(img, axis=2).astype(np.uint8), 3000, 0.01, 4)
         kps = [cv.KeyPoint(x=f[0][0], y=f[0][1], _size=20) for f in feats]
-        kps, des = self.orb.compute(img, kps)
+        kp3, des = self.orb.compute(img, kps)
+        # Get keypoints
+        pts_orb = cv.KeyPoint_convert(kps)
+        pts_matches_l = cv.KeyPoint_convert(kp1)
+        pts_mathces_r = cv.KeyPoint_convert(kp2)
 
-        pts = cv.KeyPoint_convert(kps)
-        xyz = self.lidar_generation(pts)
+        xyz = self.lidar_generation(pts_orb)
 
         img = cv.drawKeypoints(img, kps, None, color=(248, 186, 255), flags=0)
 
@@ -82,6 +84,12 @@ class FeatureExtractor(object):
 
     def _2d_to_3d(self, pts):
         points = cv.convertPointsToHomogeneous(pts)
+        points = points.reshape(-3, 2)
+        rows, cols = points.shape
+        c, r = np.meshgrid(np.arange(cols), np.arange(rows))
+        points = np.stack([c, r, points])
         points = points.reshape((3, -1))
         points = points.T
+
+        print(points.shape)
         return points
