@@ -22,28 +22,35 @@
 # Directory Structure
 ------
     .
-    ├── app # C++ GUI Desktop App
+    ├── app  # C_++ app
     │   └── desktop
-    │       ├── CMakeLists.txt.user
+    │       ├── CMakeLists.txt
     │       ├── include
     │       │   └── mainwindow.h
     │       └── src
     │           ├── main.cpp
     │           ├── maindisplay.ui
     │           └── mainwindow.cpp
-    ├── common
-    │   ├── helpers # Assist in training and testing model
+    ├── common 
+    │   ├── helpers # Support files for training and testing
     │   │   ├── support.py
     │   │   ├── train.py
     │   │   ├── transfer_model.py
     │   │   └── video.py
-    ├── drive # Main Controller
-    │   ├── lanes # Lane Semantic Segmentation
+    ├── drive  
+    │   ├── lanes # Lane segmentation
+    │   │   ├── dataset.py
+    │   │   ├── model.py
     │   ├── main.py
-    │   └── paths.json # Paths to dataset 
-    ├── etc # Images and Videos
-    ├── models # Saved models
-
+    │   └── paths.json
+    ├── etc # Videos / Images
+    ├── get_models.sh 
+    ├── models 
+    └── slam # Feature extraction 
+        ├── extract
+        │   ├── features.py
+        └── vision
+            └── visuals.py
 
 # To-Do
 - [x] Lane segmentation model (Quantize). 
