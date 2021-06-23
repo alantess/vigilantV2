@@ -1,10 +1,10 @@
 import numpy as np
 import torch
 from torchvision import transforms
-from common.helpers.support import apply_sharpen_filter
+from .support import apply_sharpen_filter
 import cv2 as cv
 import open3d as o3d
-from common.slam.extract import FeatureExtractor
+from common.slam.features import FeatureExtractor
 
 W, H = 720, 480
 VIDEO = '../etc/videos/driving.mp4'
