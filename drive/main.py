@@ -75,7 +75,7 @@ if __name__ == '__main__':
     loss_fn = torch.nn.MSELoss()
     model = LanesSegNet(CLASSES)
     optimizer = optim.Adam(model.parameters(), lr=1e-6)
-    pt_display = FeatDisplay(model, device)
+    pt_display = FeatDisplay()
     pt_display.init()
     pt_display.show()
     # pt_display.test_vision()
