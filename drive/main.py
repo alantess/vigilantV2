@@ -76,8 +76,8 @@ if __name__ == '__main__':
     model = LanesSegNet(CLASSES)
     optimizer = optim.Adam(model.parameters(), lr=1e-6)
     pt_display = FeatDisplay(model, device)
-    # pt_display.show_with_model()
-    pt_display.show()
+    # pt_display.test_vision()
+    pt_display.show_with_model()
     # trainset = LanesDataset(paths["img_path"], paths["lanes_mask_trainpath"],
     #                         preprocess, 6)
     # calibrated_set = LanesDataset(paths["img_path"],
