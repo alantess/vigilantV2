@@ -53,12 +53,11 @@
             └── visuals.py
 
 # To-Do
-```diff
+
 - [x] Lane segmentation model (Quantize). 
 - [ ] Road segmention model (Quantize).  
 - [ ] Speed analyis via camera model (Quantize). 
 - [ ] Deploy model on device. 
-```
 
 # License
 ----
